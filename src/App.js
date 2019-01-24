@@ -8,7 +8,6 @@ class App extends Component {
   state = {
     users: [{ username: 'Amy' }, { username: 'John' }],
     inputMessage: {'Amy':'','John':''},
-    //submitted: {'Amy':false, 'John':false},
     messages : []
   }
   /*
@@ -16,6 +15,7 @@ class App extends Component {
   allowed to submit.
   */
   isDisabled = (username) => {
+    console.log(`input message in disabled check: '${this.state.inputMessage[username]}'`)
     return this.state.inputMessage[username].trim().length === 0;
     //return false
   };
@@ -29,36 +29,12 @@ updateInputMsg = (event, username) => {
 
 	handleSubmit = (event, username) => {
       event.preventDefault();
-      //this.props.submitted_user = username;
-      /*this.setState({
-        submitted: {[username]:true}
-      });*/
-      /*this.setState(
-        (oldState, props) => ({messages:[...oldState.messages, {[uname]:oldState.inputMessage[uname]}]})
-      );*/
-      this.setState(
-        (oldState, props, username) => (
-          {
-	          'messages':[...oldState.messages, {'username': username, 'text': oldState.inputMessage[usernamenpm]}]
-          }
-        ),
-         () => {this.props.submitted_user = ''}
-      );
+      this.setState({
+        'messages':[...this.state.messages, {'username': username, 'text': this.state.inputMessage[username]}],
+        inputMessage: {[username]:''}
+      });
     };
 
-/*
-	componentDidUpdate(prevProps, prevState) {
-      const usersSubmitted = prevState.users.filter(user => prevState.submitted[user.username] === true)
-		if (usersSubmitted.length > 0) {
-            this.setState(
-          		{
-                  'messages':[...prevState.messages, usersSubmitted.map(user => ({ 'username': user.username, 'text': prevState.inputMessage[user.username]}))],
-					'submitted':usersSubmitted.map(user => ({[user.username]:false})),
-}
-            );
-        }
-    }
-*/
   render() {
     return (
       <div className="App">
