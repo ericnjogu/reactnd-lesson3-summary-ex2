@@ -29,7 +29,7 @@ updateInputMsg = (event, username) => {
 
 	handleSubmit = (event, username) => {
       event.preventDefault();
-      this.props.userSubmitted = username;
+      //this.props.submitted_user = username;
       /*this.setState({
         submitted: {[username]:true}
       });*/
@@ -37,12 +37,12 @@ updateInputMsg = (event, username) => {
         (oldState, props) => ({messages:[...oldState.messages, {[uname]:oldState.inputMessage[uname]}]})
       );*/
       this.setState(
-        (oldState, props) => (
+        (oldState, props, username) => (
           {
-	          'messages':[...oldState.messages, {'username': props.userSubmitted, 'text': oldState.inputMessage[props.userSubmitted]}]
+	          'messages':[...oldState.messages, {'username': username, 'text': oldState.inputMessage[usernamenpm]}]
           }
         ),
-         () => {this.props.userSubmitted = ''}
+         () => {this.props.submitted_user = ''}
       );
     };
 
@@ -74,6 +74,14 @@ updateInputMsg = (event, username) => {
 				updateInputMsg = {this.updateInputMsg}
 				handleSubmit = {this.handleSubmit}
 				inputMessage = {this.state.inputMessage[this.state.users[0].username]}
+          />
+ 			<ChatWindow 
+    			messages={this.state.messages} 
+				user={this.state.users[1]} 
+				submitIsDisabled={this.isDisabled}
+				updateInputMsg = {this.updateInputMsg}
+				handleSubmit = {this.handleSubmit}
+				inputMessage = {this.state.inputMessage[this.state.users[1].username]}
           />
         </div>
         
